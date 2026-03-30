@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurd Kali | Ha3MrX Terminal</title>
+    <title>Kurd Kali | Vulnerability Scanner</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #050505; color: #00ff41; font-family: 'JetBrains Mono', monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
@@ -19,7 +19,6 @@
         .res { color: #00cc33; margin-bottom: 20px; white-space: pre-wrap; line-height: 1.4; }
         input { background: transparent; border: none; color: #00ff41; font-family: inherit; font-size: 15px; outline: none; width: 70%; }
         .hidden { display: none; }
-        .project-item { color: #ffff00; font-weight: bold; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #00ff41; }
     </style>
@@ -28,34 +27,33 @@
     <canvas id="matrix"></canvas>
 
     <div id="system-stats">
-        <div style="color: #ffff00; font-weight: bold; border-bottom: 1px solid #00ff41; margin-bottom: 5px;">[ KURD KALI MONITOR ]</div>
+        <div style="color: #ffff00; font-weight: bold; border-bottom: 1px solid #00ff41; margin-bottom: 5px;">[ SCANNER ONLINE ]</div>
         <div>ALIAS: Kurd Kali</div>
-        <div>REPOS: 14 Public</div>
+        <div>ENGINE: Ha3MrX v2.0</div>
         <div>TIME: <span id="stat-time">00:00:00</span></div>
-        <div>CPU: <span id="stat-cpu">0%</span></div>
-        <div>STATUS: <span style="color: #27c93f;">CONNECTED</span></div>
+        <div>THREATS: <span id="threats-found" style="color:red">0</span></div>
+        <div>STATUS: <span style="color: #27c93f;">READY</span></div>
     </div>
 
     <div class="terminal-window">
         <header class="terminal-header">
             <div><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
-            <div class="title">HA3MRX_MAINFRAME // ROOT_ACCESS_GRANTED</div>
+            <div class="title">HA3MRX_SCANNER // ROOT_SHELL</div>
         </header>
         
         <main class="content" id="main-content">
             <div id="login-section">
-                <p>Kurd Kali Terminal System [Version 10.0.1].</p>
+                <p>Welcome Kurd Kali. Initialize Scanner Module?</p>
                 <div><span class="prompt">User:</span><input type="text" id="username-input" autofocus autocomplete="off"></div>
                 <div id="pass-input-line" class="hidden"><span class="prompt">Pass:</span><input type="password" id="password-input" autocomplete="off"></div>
             </div>
 
             <div id="terminal-section" class="hidden">
                 <div id="output">
-                    <p style="color: #ffff00;">[!] AUTHENTICATION SUCCESSFUL. WELCOME MASTER KURD KALI.</p>
-                    <p>Type 'tools' to see all your hacking projects.</p>
+                    <p style="color: #ffff00;">[!] SCANNER MODULE LOADED. NEW COMMAND: 'scan [target]'</p>
                 </div>
                 <div class="input-line">
-                    <span class="prompt">kurdkali@ha3mrx:~$</span>
+                    <span class="prompt">kurdkali@scanner:~$</span>
                     <input type="text" id="cli" autocomplete="off">
                 </div>
             </div>
@@ -63,79 +61,73 @@
     </div>
 
     <script>
+        // Matrix Animation
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const chars = "010101XYZ#$"; const fontSize = 16;
         const columns = canvas.width / fontSize; const drops = Array(Math.floor(columns)).fill(1);
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff41"; ctx.font = fontSize + "px monospace";
-            drops.forEach((y, i) => {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, y * fontSize);
-                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            });
-        }
+        function draw() { ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#00ff41"; ctx.font = fontSize + "px monospace"; drops.forEach((y, i) => { const text = chars[Math.floor(Math.random() * chars.length)]; ctx.fillText(text, i * fontSize, y * fontSize); if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; }); }
         setInterval(draw, 35);
-        setInterval(() => {
-            document.getElementById('stat-time').innerText = new Date().toLocaleTimeString();
-            document.getElementById('stat-cpu').innerText = Math.floor(Math.random() * 15 + 5) + "%";
-        }, 1000);
+        setInterval(() => { document.getElementById('stat-time').innerText = new Date().toLocaleTimeString(); }, 1000);
 
+        // Audio
         let audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
         audio.loop = true; audio.volume = 0.2;
         document.addEventListener('click', () => audio.play(), { once: true });
 
+        // Login
         const userIn = document.getElementById('username-input');
         const passIn = document.getElementById('password-input');
-        userIn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                if (userIn.value.trim() === "admin") { userIn.disabled = true; document.getElementById('pass-input-line').classList.remove('hidden'); passIn.focus(); }
-                else userIn.value = "";
-            }
-        });
-        passIn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                if (passIn.value === "root") { document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); }
-                else passIn.value = "";
-            }
-        });
+        userIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (userIn.value.trim() === "admin") { userIn.disabled = true; document.getElementById('pass-input-line').classList.remove('hidden'); passIn.focus(); } else userIn.value = ""; } });
+        passIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (passIn.value === "root") { document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); } else passIn.value = ""; } });
 
+        // Terminal Commands
         const cli = document.getElementById('cli');
         const output = document.getElementById('output');
+        let threatCount = 0;
+
         cli.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                const val = cli.value.trim().toLowerCase();
-                output.innerHTML += `<p><span class="prompt">kurdkali@ha3mrx:~$</span> ${cli.value}</p>`;
+                const inputVal = cli.value.trim().split(" ");
+                const cmd = inputVal[0].toLowerCase();
+                const target = inputVal[1] || "";
+                
+                output.innerHTML += `<p><span class="prompt">kurdkali@scanner:~$</span> ${cli.value}</p>`;
                 const res = document.createElement('div'); res.className = 'res';
 
-                if (val === 'help') {
-                    res.innerHTML = "COMMANDS: [ls, whoami, tools, nmap, crack, github, clear, exit]";
-                } else if (val === 'tools') {
-                    res.innerHTML = `
-<span class="project-item">[+] HA3MRX OFFENSIVE TOOLS [+]</span>
---------------------------------------------------
-1. <span style="color:#00ff41">Instainsane</span>  : Instagram multi-method brute-force attack.
-2. <span style="color:#00ff41">DDos-Attack</span>  : Advanced python script for DoS/DDoS testing.
-3. <span style="color:#00ff41">Facebash</span>     : Facebook brute-force tool for security testing.
-4. <span style="color:#00ff41">Hacker-OS</span>    : Custom terminal-style OS interface (This Project).
-5. <span style="color:#00ff41">Phone-Number</span> : Information gathering tool for phone numbers.
-6. <span style="color:#00ff41">G-Email</span>      : Automated email reconnaissance tool.
---------------------------------------------------
-Total Repositories: 14 | <span style="color:yellow">Type 'github' to visit all.</span>`;
-                } else if (val === 'github') {
-                    res.innerHTML = "Redirecting to https://github.com/Ha3MrX ...";
-                    window.open('https://github.com/Ha3MrX', '_blank');
-                } else if (val === 'whoami') {
-                    res.innerHTML = "USER: Kurd Kali\nALIAS: Ha3MrX\nRANK: Elite Security Researcher\nSYSTEM: Kali Linux Core";
-                } else if (val === 'clear') {
+                if (cmd === 'scan') {
+                    if (!target) {
+                        res.innerHTML = "Usage: scan [url/ip]";
+                    } else {
+                        res.innerHTML = `[+] Initializing scan on: <span style="color:yellow">${target}</span>...<br>`;
+                        let progress = 0;
+                        const interval = setInterval(() => {
+                            progress += 20;
+                            res.innerHTML += `> Scanning ports ${progress}%... [OK]<br>`;
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                threatCount += 2;
+                                document.getElementById('threats-found').innerText = threatCount;
+                                res.innerHTML += `<br><span style="color:red">[!] CRITICAL: SQL Injection vulnerability found in /api/v1/user</span><br>`;
+                                res.innerHTML += `<span style="color:red">[!] WARNING: Exposed Port 8080 (Jenkins) Detected</span><br>`;
+                                res.innerHTML += `<span style="color:cyan">[#] Recommendation: Update SSL certificate and patch SQLi.</span>`;
+                            }
+                            document.getElementById('main-content').scrollTop = 99999;
+                        }, 800);
+                    }
+                } else if (cmd === 'help') {
+                    res.innerHTML = "COMMANDS: [scan, tools, whoami, clear, exit]";
+                } else if (cmd === 'tools') {
+                    res.innerHTML = "--- Ha3MrX Projects ---\n1. Instainsane\n2. DDos-Attack\n3. Facebash\nType 'github' to visit.";
+                } else if (cmd === 'whoami') {
+                    res.innerHTML = "USER: Kurd Kali\nROLE: Vulnerability Researcher\nID: 0x7A2";
+                } else if (cmd === 'clear') {
                     output.innerHTML = '';
-                } else if (val === 'exit') {
+                } else if (cmd === 'exit') {
                     location.reload();
                 } else {
-                    res.innerText = "Command not recognized. Type 'help'.";
+                    res.innerText = "Unknown command.";
                 }
 
                 output.appendChild(res);
