@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurd Kali | Root Access</title>
+    <title>Kurd Kali | Ultimate Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #050505; color: #00ff41; font-family: 'JetBrains Mono', monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
         canvas { position: absolute; top: 0; left: 0; z-index: 1; }
-        .terminal-window { width: 95%; max-width: 1100px; height: 750px; background-color: rgba(0, 0, 0, 0.97); border: 1px solid #00ff41; box-shadow: 0 0 50px rgba(0, 255, 65, 0.3); display: flex; flex-direction: column; z-index: 10; position: relative; border-radius: 10px; }
+        .terminal-window { width: 95%; max-width: 1100px; height: 750px; background-color: rgba(0, 0, 0, 0.95); border: 1px solid #00ff41; box-shadow: 0 0 50px rgba(0, 255, 65, 0.3); display: flex; flex-direction: column; z-index: 10; position: relative; border-radius: 10px; }
         .terminal-header { background: #111; padding: 12px; display: flex; border-bottom: 1px solid #333; border-radius: 10px 10px 0 0; }
         .dot { height: 12px; width: 12px; border-radius: 50%; display: inline-block; margin-right: 7px; }
         .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
         .title { flex-grow: 1; text-align: center; color: #888; font-size: 12px; letter-spacing: 2px; }
         .content { padding: 30px; overflow-y: auto; flex-grow: 1; font-size: 15px; }
         .prompt { color: #00ff41; font-weight: bold; margin-right: 8px; }
-        .res { color: #00cc33; margin-bottom: 20px; white-space: pre-wrap; line-height: 1.4; }
+        .res { color: #00cc33; margin-bottom: 20px; white-space: pre-wrap; line-height: 1.5; }
         input { background: transparent; border: none; color: #00ff41; font-family: inherit; font-size: 15px; outline: none; width: 70%; }
         .hidden { display: none; }
+        .success { color: #ffff00; font-weight: bold; }
+        .danger { color: #ff5f56; }
     </style>
 </head>
 <body>
@@ -25,17 +27,18 @@
     <div class="terminal-window">
         <header class="terminal-header">
             <div><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
-            <div class="title">HA3MRX_MAINFRAME // V10.0_SCANNER_READY</div>
+            <div class="title">KURD_KALI // HA3MRX_FULL_EXPLOIT_SYSTEM</div>
         </header>
         <main class="content" id="main-content">
             <div id="login-section">
-                <p>Welcome Kurd Kali. Authenticate to access Terminal.</p>
+                <p>Welcome Kurd Kali. Initialize Full Access?</p>
                 <div><span class="prompt">User:</span><input type="text" id="username-input" autofocus autocomplete="off"></div>
                 <div id="pass-input-line" class="hidden"><span class="prompt">Pass:</span><input type="password" id="password-input" autocomplete="off"></div>
             </div>
             <div id="terminal-section" class="hidden">
                 <div id="output">
-                    <p style="color: #ffff00;">[!] AUTHENTICATION SUCCESSFUL. COMMAND 'scan [target]' IS NOW ENABLED.</p>
+                    <p style="color: #ffff00;">[!] ALL MODULES LOADED: SCANNER, BRUTEFORCE, EXPLOITER.</p>
+                    <p>Type 'help' to see all commands.</p>
                 </div>
                 <div class="input-line">
                     <span class="prompt">kurdkali@ha3mrx:~$</span>
@@ -46,44 +49,42 @@
     </div>
 
     <script>
+        // Matrix Background
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const chars = "010101XYZ#$"; const fontSize = 16;
+        const chars = "010101#$"; const fontSize = 16;
         const columns = canvas.width / fontSize; const drops = Array(Math.floor(columns)).fill(1);
         function draw() { ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#00ff41"; ctx.font = fontSize + "px monospace"; drops.forEach((y, i) => { const text = chars[Math.floor(Math.random() * chars.length)]; ctx.fillText(text, i * fontSize, y * fontSize); if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; }); }
         setInterval(draw, 35);
 
+        // Sound Effects
+        const beep = new Audio('https://www.soundjay.com/buttons/sounds/button-27.mp3'); beep.volume = 0.1;
+        const loginSuccess = new Audio('https://www.soundjay.com/communication/sounds/computer-beep-8.mp3');
+
+        // Login Logic
         const userIn = document.getElementById('username-input');
         const passIn = document.getElementById('password-input');
         userIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (userIn.value.trim() === "admin") { userIn.disabled = true; document.getElementById('pass-input-line').classList.remove('hidden'); passIn.focus(); } else userIn.value = ""; } });
-        passIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (passIn.value === "root") { document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); } else passIn.value = ""; } });
+        passIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (passIn.value === "root") { loginSuccess.play(); document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); } else passIn.value = ""; } });
 
+        // Terminal Commands
         const cli = document.getElementById('cli');
         const output = document.getElementById('output');
+        
         cli.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                beep.play();
                 const parts = cli.value.trim().split(" ");
                 const cmd = parts[0].toLowerCase();
                 const target = parts[1];
                 output.innerHTML += `<p><span class="prompt">kurdkali@ha3mrx:~$</span> ${cli.value}</p>`;
                 const res = document.createElement('div'); res.className = 'res';
                 
-                if (cmd === 'scan') {
-                    if (!target) { res.innerHTML = "Error: Please specify a target (e.g., scan google.com)"; }
+                if (cmd === 'bruteforce') {
+                    if (!target) { res.innerHTML = "Usage: bruteforce [username]"; }
                     else {
-                        res.innerHTML = `[+] Initializing scan on: ${target}...<br>[>] Port 80: Open<br>[>] Port 443: Open<br>[>] Checking vulnerabilities...`;
-                        setTimeout(() => { res.innerHTML += `<br><span style="color:red">[!] Found: SQLi vulnerability in /login.php</span>`; }, 1500);
-                    }
-                } else if (cmd === 'help') { res.innerHTML = "COMMANDS: [scan, tools, whoami, github, clear]"; }
-                else if (cmd === 'tools') { res.innerHTML = "1. Instainsane\n2. DDos-Attack\n3. Facebash"; }
-                else if (cmd === 'github') { window.open('https://github.com/Ha3MrX', '_blank'); }
-                else if (cmd === 'clear') { output.innerHTML = ''; }
-                else { res.innerText = "Command not recognized."; }
-                
-                output.appendChild(res); cli.value = ''; document.getElementById('main-content').scrollTop = 99999;
-            }
-        });
-    </script>
-</body>
-</html>
+                        res.innerHTML = `[+] Starting Brute-Force on: ${target}...<br>`;
+                        let count = 0;
+                        const timer = setInterval(() => {
+                            res.innerHTML += `[#] Attempting password_${count} ... <span class="danger">FAILED</span>
