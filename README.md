@@ -6,7 +6,7 @@ A high-end, interactive web-based terminal interface designed to showcase the se
 
 ## 🚀 Live Demo
 You can access the terminal here:  
-👉 **[CLICK HERE TO LAUNCH TERMINAL](PASTE_YOUR_GITHUB_PAGES_LINK_HERE)**
+👉 **[CLICK HERE TO LAUNCH TERMINAL](https://ha3mrx.github.io/kurd-kali-os/)**
 
 ---
 
