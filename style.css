@@ -1,0 +1,24 @@
+body { background-color: #050505; color: #00ff41; font-family: 'Consolas', monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+
+.matrix-rain { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,255,65,0.08) 100%); animation: rain 3s infinite linear; z-index: 1; }
+@keyframes rain { from { background-position: 0% -100%; } to { background-position: 0% 100%; } }
+
+.terminal-window { width: 90%; max-width: 900px; height: 550px; background-color: rgba(0, 0, 0, 0.95); border: 1px solid #00ff41; box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); display: flex; flex-direction: column; z-index: 10; position: relative; }
+.terminal-bar { background: #1a1a1a; padding: 10px; display: flex; border-bottom: 1px solid #333; }
+.control { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.close { background: #ff5f56; } .minimize { background: #ffbd2e; } .maximize { background: #27c93f; }
+.terminal-title { flex-grow: 1; text-align: center; color: #888; font-size: 13px; }
+
+.terminal-content { padding: 20px; overflow-y: auto; flex-grow: 1; }
+.prompt { font-weight: bold; color: #00ff41; }
+.result { margin-bottom: 15px; color: #00cc33; }
+.link { color: #00ff41; text-decoration: none; border-bottom: 1px dashed #00ff41; }
+
+.typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid #00ff41; width: 0; animation: typing 1.5s steps(40, end) forwards; }
+@keyframes typing { from { width: 0 } to { width: 100% } }
+
+.glitch { animation: shake 1s infinite alternate; }
+@keyframes shake { 0% { transform: skewX(1deg); } 100% { transform: skewX(-1deg); } }
+
+.input-line { display: flex; align-items: center; }
+input { background: transparent; border: none; color: #00ff41; font-family: inherit; font-size: inherit; outline: none; flex-grow: 1; }
