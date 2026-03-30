@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurd Kali | Ultimate Terminal</title>
+    <title>Kurd Kali | Ha3MrX Mainframe</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #050505; color: #00ff41; font-family: 'JetBrains Mono', monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
@@ -27,18 +27,18 @@
     <div class="terminal-window">
         <header class="terminal-header">
             <div><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
-            <div class="title">KURD_KALI // HA3MRX_FULL_EXPLOIT_SYSTEM</div>
+            <div class="title">KURD_KALI // HA3MRX_OS_V13</div>
         </header>
         <main class="content" id="main-content">
             <div id="login-section">
-                <p>Welcome Kurd Kali. Initialize Full Access?</p>
+                <p style="color: #00ff41;">[SYSTEM] Initializing Ha3MrX Terminal... Access Denied. Please Login.</p>
                 <div><span class="prompt">User:</span><input type="text" id="username-input" autofocus autocomplete="off"></div>
                 <div id="pass-input-line" class="hidden"><span class="prompt">Pass:</span><input type="password" id="password-input" autocomplete="off"></div>
             </div>
             <div id="terminal-section" class="hidden">
                 <div id="output">
-                    <p style="color: #ffff00;">[!] ALL MODULES LOADED: SCANNER, BRUTEFORCE, EXPLOITER.</p>
-                    <p>Type 'help' to see all commands.</p>
+                    <p style="color: #ffff00;">[!] AUTHENTICATION SUCCESSFUL. WELCOME MASTER KURD KALI.</p>
+                    <p>Modules Enabled: scan, bruteforce, tools, whoami.</p>
                 </div>
                 <div class="input-line">
                     <span class="prompt">kurdkali@ha3mrx:~$</span>
@@ -58,20 +58,24 @@
         function draw() { ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#00ff41"; ctx.font = fontSize + "px monospace"; drops.forEach((y, i) => { const text = chars[Math.floor(Math.random() * chars.length)]; ctx.fillText(text, i * fontSize, y * fontSize); if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; }); }
         setInterval(draw, 35);
 
-        // Sound Effects
+        // --- Audio Controls ---
+        const bgMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+        bgMusic.loop = true; bgMusic.volume = 0.15;
         const beep = new Audio('https://www.soundjay.com/buttons/sounds/button-27.mp3'); beep.volume = 0.1;
-        const loginSuccess = new Audio('https://www.soundjay.com/communication/sounds/computer-beep-8.mp3');
+        const loginSfx = new Audio('https://www.soundjay.com/communication/sounds/computer-beep-8.mp3');
+
+        // Start music on first interaction
+        document.addEventListener('click', () => { if (bgMusic.paused) bgMusic.play(); }, { once: true });
 
         // Login Logic
         const userIn = document.getElementById('username-input');
         const passIn = document.getElementById('password-input');
         userIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (userIn.value.trim() === "admin") { userIn.disabled = true; document.getElementById('pass-input-line').classList.remove('hidden'); passIn.focus(); } else userIn.value = ""; } });
-        passIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (passIn.value === "root") { loginSuccess.play(); document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); } else passIn.value = ""; } });
+        passIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { if (passIn.value === "root") { loginSfx.play(); document.getElementById('login-section').classList.add('hidden'); document.getElementById('terminal-section').classList.remove('hidden'); document.getElementById('cli').focus(); } else passIn.value = ""; } });
 
-        // Terminal Commands
+        // Terminal Logic
         const cli = document.getElementById('cli');
         const output = document.getElementById('output');
-        
         cli.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 beep.play();
@@ -87,4 +91,42 @@
                         res.innerHTML = `[+] Starting Brute-Force on: ${target}...<br>`;
                         let count = 0;
                         const timer = setInterval(() => {
-                            res.innerHTML += `[#] Attempting password_${count} ... <span class="danger">FAILED</span>
+                            res.innerHTML += `[#] testing_${count} ... <span class="danger">FAILED</span><br>`;
+                            count++;
+                            if (count > 6) {
+                                clearInterval(timer);
+                                res.innerHTML += `<br><span class="success">[!] MATCH FOUND! Password: kurdkali@2026</span>`;
+                            }
+                            document.getElementById('main-content').scrollTop = 99999;
+                        }, 400);
+                    }
+                } else if (cmd === 'scan') {
+                    if (!target) { res.innerHTML = "Usage: scan [target]"; }
+                    else {
+                        res.innerHTML = `[+] Scanning ${target}...<br>`;
+                        setTimeout(() => { 
+                            res.innerHTML += `[>] Port 80: OPEN<br>[>] Port 443: OPEN<br><span class="danger">[!] VULNERABILITY: SQL Injection Detected in /api/auth</span>`;
+                            document.getElementById('main-content').scrollTop = 99999;
+                        }, 1200);
+                    }
+                } else if (cmd === 'tools') {
+                    res.innerHTML = "--- Ha3MrX Repository ---\n1. Instainsane\n2. DDos-Attack\n3. Facebash\n4. Phone-Number";
+                } else if (cmd === 'help') {
+                    res.innerHTML = "AVAILABLE: [bruteforce, scan, tools, whoami, clear, github, exit]";
+                } else if (cmd === 'whoami') {
+                    res.innerHTML = "USER: Kurd Kali\nSTATUS: Root Access Granted";
+                } else if (cmd === 'github') {
+                    window.open('https://github.com/Ha3MrX', '_blank');
+                } else if (cmd === 'clear') {
+                    output.innerHTML = '';
+                } else if (cmd === 'exit') {
+                    location.reload();
+                } else {
+                    res.innerText = "Command not recognized.";
+                }
+                output.appendChild(res); cli.value = ''; document.getElementById('main-content').scrollTop = 99999;
+            }
+        });
+    </script>
+</body>
+</html>
